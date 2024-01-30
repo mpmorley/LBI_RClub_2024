@@ -34,13 +34,16 @@ is.character(var)
 var <- T
 var <- TRUE
 
+var <- "TRUE"
+
 isTRUE(var)
 isFALSE(var)
 
 
 #This will give an error.. sometimes
+true <- FALSE
 var <- true
-
+class <- 10
 
 
 # Vectors!!! ---------------------------------------
@@ -55,16 +58,18 @@ a[1]
 a[6]
 a[-2]
 
+i=2
+a[i]
 
 #Seq function to create sequences
 
-seq(0,10,by=2)
+seq(from=0,to=10,by=2)
 seq(1,10,by=2)
 
 
 rep(c(1:5))
 rep(c(1:5),3)
-
+?rep
 
 
 #Creating vector with random numbers
@@ -103,19 +108,21 @@ c1 <- c('DCM','DCM')
 c2 <- c('HCM','HCM','HCM')
 c3 <- c(c1,c2)
 c3
-  
-  
+
+
 groups <- c(rep('DCM',10),rep('HCM',15),rep('NF',20),rep('nonfail',5))
 groups
 
 #Create a random vector of chars, I'll explain the factor function later. 
 
 groups.a <- sample(c('DCM','HCM','NF'),50,replace=T)
-summary(factor(groups.a))
-groups.b<-sample(groups,50,replace=T, prob = c(.2,.3,.5))
+groups.a <- sample(c('DCM','HCM','NF'),4,replace=T)
+#Table function works great for a summary
+table(groups)
+groups.b<-sample(c('DCM','HCM','NF'),50,replace=T, prob = c(.2,.3,.5))
 summary(factor(groups.b))
 
-        
+
 
 #Create a logical vector         
 
@@ -134,6 +141,12 @@ r50 >= 5
 r50 == 5
 #Then 
 sum(r50>10)
+table(r50>5)
+
+r50[r50>15]
+
+#we can use the table function to get a summary
+table(groups)
 
 sum(r50 > mean(r50))
 
@@ -145,7 +158,10 @@ sum(groups=='HCM')
 #Selecting elements from a char vector. 
 
 groups[2:5]
-groups[groups=='HCM']
+groups[groups=='HCM' | groups=='NF']
+
+groups=='HCM'
+
 
 #Using the 'or' and 'and' operator. 
 groups[groups=='HCM' | groups=='DCM']
@@ -153,11 +169,12 @@ groups[groups=='HCM' & groups=='DCM']
 
 #The 'in' operator 
 
-groups[groups %in% c('HCM','DCM')]
+groups[!groups %in% c('HCM','DCM')]
+#### DANGER DO NOT EVER I MNEAN EVER DO THIS!!!!!!!!!!!!!!!!!!
+groups[groups == c('HCM','DCM')]
 
-#The not operator 
+#The not/negation operator 
 groups[groups != 'NF']
-
 
 #Let's use a comparisons to fix the nonfail label
 
@@ -167,12 +184,6 @@ groups[groups=='nonfail'] <- 'NF'
 
 sum(groups=='nonfail')
 
-
-#We can randomly sample a vector as well. 
-set.seed(10)
-sample(groups,15)
-set.seed(10)
-sample(groups,15)
 
 
 #What can't we do,Cannot mix data types, everyting will be cast to char.  
@@ -199,8 +210,6 @@ groups.factor
 plot(groups.factor,r50)
 
 
-t.test(r50[groups.factor=='NF'],r50[groups.factor=='HCM'],var.equal = T)
-
 
 # NAs vs Nulls ---------------------------------------------------------------------
 
@@ -220,4 +229,3 @@ r50.nona <- na.omit(r50.na)
 mean(r50.nona)
 
 mean(r50.na,na.rm = T)
-
