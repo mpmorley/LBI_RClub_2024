@@ -158,7 +158,7 @@ is.vector(df$SFTPC)
 ####################
 #   read in data using base R
 #######################
-d.base <- read.csv('testData.csv')
+d.base <- read.csv('testDataUnTidy.csv')
 d.base
 summary(d.base)
 
@@ -166,9 +166,10 @@ summary(d.base)
 library(tidyverse)
 library(lubridate) 
 
-d.tidy <- read_csv('testData.csv')
+d.tidy <- read_csv('testDataUnTidy.csv')
 
 d.tidy
+
 
 #Let's fix the date, we use lubridate function parse_date_time
 
