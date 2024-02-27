@@ -17,6 +17,7 @@ Every other Tues in Rm 11-121 at 10:30am
 
 ## R Resources
 
++ [Cheatsheets](https://posit.co/resources/cheatsheets/)
 + [Swirl](https://swirlstats.com/)
 + [Quick-R](https://www.statmethods.net/)
 + [Learn R Video](https://youtu.be/_V8eKsto3Ug)
