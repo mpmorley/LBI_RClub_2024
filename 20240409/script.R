@@ -3,10 +3,10 @@ library(tidyverse)
 library(UCell)
 
 
-#Install Tthe SCP library 
+#Install The SCP library 
 #https://zhanghao-njmu.github.io/SCP/
 library(SCP)
-#Install teh UCell library
+#Install the UCell library
 if (!requireNamespace("BiocManager", quietly=TRUE))
   install.packages("BiocManager")
 BiocManager::install("UCell")
@@ -53,7 +53,6 @@ Features(scrna)
 grep('Rps|Rpl',rownames(scrna))
 
 grep('Rps|Rpl',rownames(scrna),value = T)
-
 
 
 # Meta Data ---------------------------------------------------------------
@@ -155,7 +154,7 @@ Idents(scrna) <- 'seurat_clusters'
 
 
 
-# Seurat Visualtions ------------------------------------------------------
+# Seurat Visualizations ------------------------------------------------------
 
 # Plot is for discrete categorical data
 #Using the ident
@@ -185,7 +184,7 @@ d1 <- DimPlot(scrna,group.by = 'seurat_clusters') + coord_equal() + theme_void()
 f1 <- FeaturePlot(object=scrna,features='Ager',order = T) + coord_equal() + theme_void()
 
 
-d1|f1
+d1/f1
 
 
 
@@ -193,7 +192,7 @@ d1|f1
 # Nicer Plots using the SCP pacakge ---------------------------------------
 
 #Let's revist the vlnplot for QC
-#Let's make a variable called wcfeatires so we don;'t need to type this in for everplot.
+#Let's make a variable called qcfeatires so we don;'t need to type this in for everplot.
 qcfeatures <- c("nCount_RNA","nFeature_RNA","percent.ribo")
 
 FeatureStatPlot(scrna, stat.by =qcfeatures , group.by = "seurat_clusters",ncol = 1)
@@ -211,7 +210,7 @@ CellDimPlot(scrna, group.by = "seurat_clusters")
 #We can do a bit better, let's label clusters and make pretty axes. 
 
 
-d1 <- CellDimPlot(scrna, group.by = "seurat_clusters", reduction = "UMAP",theme_use = 'theme_blank', label = T,label_insitu = T)
+d1 <- CellDimPlot(scrna, group.by = "seurat_clusters", reduction = "UMAP",theme_use = 'theme_blank', label = T,label_insitu = T,label_repulsion = T)
 d1
 
 
@@ -249,7 +248,7 @@ dge.list <- fm %>% named_group_split(cluster)
 dge.list
 
 #The write_xlsx can take a list of data frames and then save them to seperate sheets in an excel workbook. 
-writexl::write_xlsx(dge.list,path = paste0(plotdir,'FindMarkers.xlsx'))
+writexl::write_xlsx(dge.list,path = 'FindMarkers.xlsx')
 
 
 # AT2 Score ---------------------------------------------------------------
@@ -260,12 +259,9 @@ scrna <- AddModuleScore_UCell(scrna, features = gene.sets,name='_score')
 f3 <- FeatureDimPlot(scrna,'AT2_score',theme_use = 'theme_blank')
 v3 <- FeatureStatPlot(scrna, stat.by = gene.sets$AT2, group.by = "seurat_clusters",stack = T,xlab = 'Cluster',legend.position = 'none')
 
-(d1|f3)/v2
+(d1|f3)/v3
 
 
-
-
-
-
+scrna[[]]
 
 
