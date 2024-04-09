@@ -31,7 +31,7 @@ named_group_split <- function(.tbl, ...) {
 # Create a Seurat Object --------------------------------------------------
 
 
-counts <- Read10X_h5('scdata/EEM-scM-016/SoupX/Filtered.h5')
+counts <- Read10X_h5('Filtered.h5')
 scrna <- CreateSeuratObject(counts = counts)
 
 
