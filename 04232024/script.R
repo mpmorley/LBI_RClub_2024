@@ -105,22 +105,18 @@ addme(2,4)
 
 
 # Putting it all togather -------------------------------------------------
+data("pbmc_small")
 
 
-
-counts <- Read10X_h5('20240409/Filtered.h5')
-scrna <- CreateSeuratObject(counts = counts) %>% 
-  SCTransform(vars.to.regress = c('nFeature_RNA')) %>%
-  RunPCA() %>%
-  FindNeighbors(dims = 1:30) %>%
-  FindClusters() %>%
-  RunUMAP(dims = 1:30)
+scrna <- pbmc_small
+scrna
+scrna$seurat_clusters <- scrna$RNA_snn_res.0.8 
 
 
 
 d1 <- CellDimPlot(scrna, group.by = "seurat_clusters", reduction = "UMAP",theme_use = 'theme_blank', label = T,label_insitu = T,legend.position = 'none')
-f1 <- FeatureDimPlot(scrna,'Sftpc' ,theme_use = 'theme_blank',ncol=1)
-v1 <- FeatureStatPlot(scrna, stat.by ="Sftpc" , group.by = "seurat_clusters",legend.position ='none')
+f1 <- FeatureDimPlot(scrna,'SPON2' ,theme_use = 'theme_blank',ncol=1)
+v1 <- FeatureStatPlot(scrna, stat.by ="SPON2" , group.by = "seurat_clusters",legend.position ='none')
 
 
 (d1|f1)/v1
@@ -129,7 +125,7 @@ v1 <- FeatureStatPlot(scrna, stat.by ="Sftpc" , group.by = "seurat_clusters",leg
 
 pw <- (d1|f1)/v1 + plot_layout(heights = c(5,1))
 
-ggsave('Sftpc_plot.png',pw,height=10,width=10)
+ggsave('SPON2_plot.png',pw,height=10,width=10)
 
 
 #This is great but what if I wanted to plot another gene! or 100. 
@@ -148,11 +144,17 @@ myGenePlot <- function(gene,savefile=FALSE){
   
 }
 
-myGenePlot('Ager')
-myGenePlot('Car4')
-myGenePlot('Car4',savefile = TRUE)
+myGenePlot('PTPN22')
+myGenePlot('CCR7')
+myGenePlot('SIT1',savefile = TRUE)
   
   
+  
+
+
+
+
+
 
 
 
