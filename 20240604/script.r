@@ -29,7 +29,7 @@ library(clusterProfiler)
 # we need to do this for later. 
 
 
-diff <- read.csv('20240604/DiffExRresults.csv') |>
+diff <- read.csv('DiffExRresults.csv') |>
   mutate(ENTREZID=as.character(ENTREZID)) |>
   arrange(-fc)
 
