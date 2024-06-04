@@ -1,9 +1,8 @@
 #############################################################################
 # MPM 20240604 R club Script for Gene Set Enrichment 
 # 
-# http://yulab-smu.top/clusterProfiler-book/
+# https://yulab-smu.top/biomedical-knowledge-mining-book/index.html
 #
-
 
 # Install clusterprofiler from BioConductor. 
 
@@ -15,7 +14,7 @@ BiocManager::install("enrichplot")
 BiocManager::install("pathview")
 
 
-# WE also need to install species specefic Gene Annotation database
+# We also need to install species specific Gene Annotation database
 # We'll install the human one,
 # see http://bioconductor.org/packages/release/BiocViews.html#___OrgDb
 BiocManager::install("org.Hs.eg.db")
@@ -24,6 +23,7 @@ BiocManager::install("org.Hs.eg.db")
 #Load some libraries 
 
 library(tidyverse)
+library(clusterProfiler)
 
 #Let's read in some Diff Expression results, we're going to sort by Foldchange as well,
 # we need to do this for later. 
@@ -39,7 +39,6 @@ diff |> select(SYMBOL)
 
 #PROBLEM!!! 
 
-library(clusterProfiler)
 #Look at the output from loading this library, it say it masks select from dplyr
 library(org.Hs.eg.db)
 
@@ -303,7 +302,7 @@ kk <- diff  |>
     
   )
 
-kk.result <- kk@result
+view(kk@result)
 
 #Plot the kegg results
 
