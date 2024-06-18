@@ -8,9 +8,6 @@ library(SCP)
 
 scrna.all <- readRDS("SeuratTest.RDS")
 
-
-crna.all@meta.data <- scrna.all[[]] |> select(-var_sample, -seurat_clusters,-var_cluster,-starts_with('SCT_snn'))
-
 head(scrna.all[[]])
 
 #We don't have a meta.data field for which sample, all we have is our library ID. We can use mapvalues function to gor from lib ID to sample name
