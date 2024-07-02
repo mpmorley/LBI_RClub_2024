@@ -43,21 +43,22 @@ iwalk(alist,\(element_value, element_name){
 scrna <- readRDS("SeuratTest.RDS")
 
 #Seurat version
-DimPlot(scrna.all,group.by = 'predicted.celltype')
+DimPlot(scrna,group.by = 'predicted.celltype')
 
 #Let's use SCP package to make nicer plots
-d1 <- CellDimPlot(scrna, group.by = "predicted.celltype", reduction = "UMAP",theme_use = 'theme_blank', label = T,legend.position = 'none', label_insitu = T,label_repulsion = T,palette = 'Categorical.12')
+d1 <- CellDimPlot(scrna, group.by = "predicted.celltype", reduction = "UMAP",theme_use = 'theme_blank', 
+                  label = T,legend.position = 'none', label_insitu = T,label_repulsion = T,palette = 'Categorical.12')
 f1 <- FeatureDimPlot(scrna,features='Car4',reduction = "UMAP",theme_use = 'theme_blank')
 v1 <- FeatureStatPlot(srt = scrna, group.by = 'var_celltype',stat.by = c("Car4"), add_box = TRUE)
 (d1+f1)/v1
 
 
 # Let's reorder the celltypes 
-scrna$var_celltype <- factor(scrna$var_celltype, c("Cap1","Cap1_2",  "Cap2", 'Cap_postflu',"Arterial_endothelium","Venous_endothelium","Lymphatic_endothelium"))
+scrna$predicted.celltype <- factor(scrna$predicted.celltype, c("Cap1","Cap1_2",  "Cap2", 'Cap_postflu',"Arterial_endothelium","Venous_endothelium","Lymphatic_endothelium"))
 
 #Let's remake the violinplot now
 
-v1 <- FeatureStatPlot(srt = scrna, group.by = 'var_celltype',stat.by = c("Car4"), add_box = TRUE)
+v1 <- FeatureStatPlot(srt = scrna, group.by = 'predicted.celltype',stat.by = c("Car4"), add_box = TRUE)
 v1
 
 #and now a 3 panel figure. 
@@ -66,15 +67,14 @@ v1
 #What if we want plot many genes. First let's turn this into a fucntion. We need a seaurt object and a genename as args. 
 
 myGenePlot <- function(object,gene){
-  d1 <- CellDimPlot(scrna, group.by = "predicted.celltype", reduction = "UMAP",theme_use = 'theme_blank', label = T,legend.position = 'none', label_insitu = T,label_repulsion = T,palette = 'Categorical.12')
+  d1 <- CellDimPlot(object, group.by = "predicted.celltype", reduction = "UMAP",theme_use = 'theme_blank', label = T,legend.position = 'none', label_insitu = T,label_repulsion = T,palette = 'Categorical.12')
   f1 <- FeatureDimPlot(object,features=gene,reduction = "UMAP",theme_use = 'theme_blank')
-  v1 <- FeatureStatPlot(srt = object, group.by = 'var_celltype',stat.by = gene, add_box = TRUE)
+  v1 <- FeatureStatPlot(srt = object, group.by = 'predicted.celltype',stat.by = gene, add_box = TRUE)
   (d1+f1)/v1
-  
 }
 
 #let's test it. 
-myGenePlot(object=scrna,gene='Car4')
+myGenePlot(object=scrna,gene='Atf3')
 
 #Let's do a few genes 
 
@@ -118,5 +118,16 @@ dir.create(plotdir)
 iwalk(plots,\(plot,genename){
   ggsave(filename=str_glue('{plotdir}/{genename}.png'),plot = plot,width=12,height = 10)  
 })
+
+
+
+
+iwalk(genestoplot,\(gene){
+  plot <- myGenePlot(object=scrna,gene=gene)
+  ggsave(filename=str_glue('{plotdir}/{gene}.png'),plot = plot,width=12,height = 10) 
+})
+
+
+
 
 
