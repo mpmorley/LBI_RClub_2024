@@ -70,6 +70,14 @@ scrna.sub <- AddModuleScore_UCell(scrna.sub,features =list('CAP1_sub' = CAP1gene
 FeatureScatter(scrna.sub,feature1 = 'CAP1_UCell',feature2 = 'CAP1_sub_UCell')
 
 
+# SCT vs RNA assat Does it matter?  ---------------------------------------
+#https://github.com/carmonalab/UCell/issues/34 Says it doesn't but.. 
+
+DefaultAssay(scrna) <- "RNA"
+scrna <- AddModuleScore_UCell(scrna,features =list('CAP1_rna' = CAP1genes[[1]]))
+
+FeatureScatter(scrna,feature1 = 'CAP1_UCell',feature2 = 'CAP1_rna_UCell')
+
 # Another way to generate a gene list -------------------------------------
 
 
@@ -151,4 +159,11 @@ genelist4 <- mart_results |> dplyr::select(mgi_symbol) |> distinct() |> pull(mgi
 scrna <- AddModuleScore_UCell(scrna, features = list('EndoProlif' = genelist4))
 
 VlnPlot(object = scrna,features = "EndoProlif_UCell",pt.size = 0) + NoLegend()
+
+
+
+
+
+
+
 
