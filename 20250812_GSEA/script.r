@@ -73,7 +73,7 @@ p1|p2
 
 
 # We can use pctdiff as a cutoff as well. 
-dge.genes.pctdiff <- dge |> filter(p_val_adj < 0.05 & abs(pctdiff) > .15) |> pull(ENTREZID)
+dge.genes.pctdiff <- dge |> filter(p_val_adj < 0.05 & abs(pctdiff) > .10) |> pull(ENTREZID)
 length(dge.genes.pctdiff)
 
 er.BP_universe.pctdiff <- enrichGO(
@@ -126,7 +126,7 @@ msigdbr_collections(db_species='MM')
 gs.MH <- msigdbr(db_species='MM', species = "Mus musculus", collection = "MH") |>
   dplyr::select(gs_name, ncbi_gene)
 
-gsea>MH <- GSEA(ranks, TERM2GENE = gs.MH)
+gsea.MH <- GSEA(ranks, TERM2GENE = gs.MH)
 
 
 
@@ -174,6 +174,11 @@ gse.list <- map(gse.list, ~setReadable(.x,OrgDb = org.Mm.eg.db::org.Mm.eg.db, ke
 
 map(gse.list,~.x@result) |>
   writexl::write_xlsx(path='GSE_results.xlsx')
+
+
+
+
+
 
 
 
